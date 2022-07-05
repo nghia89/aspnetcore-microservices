@@ -8,7 +8,7 @@ using Product.API.Repositories.Interfaces;
 namespace Product.API.Repositories;
 
 
-public class ProductRepository : RepositoryBaseAsyncAsync<CatalogProduct, long, ProductContext>, IProductRepository
+public class ProductRepository : RepositoryBaseAsync<CatalogProduct, long, ProductContext>, IProductRepository
 {
     public ProductRepository(ProductContext dbContext, IUnitOfWork<ProductContext> unitOfWork) : base(dbContext, unitOfWork)
     {
@@ -18,7 +18,7 @@ public class ProductRepository : RepositoryBaseAsyncAsync<CatalogProduct, long, 
 
     public Task<CatalogProduct> GetProduct(long id) => GetByIdAsync(id);
 
-    public  Task<CatalogProduct> GetProductByNo(string productNo) =>
+    public Task<CatalogProduct> GetProductByNo(string productNo) =>
         FindByCondition(x => x.No.Equals(productNo)).SingleOrDefaultAsync();
 
     public Task CreateProduct(CatalogProduct product) => CreateAsync(product);

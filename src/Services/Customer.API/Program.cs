@@ -1,3 +1,5 @@
+using Customer.API.Persistence;
+using Microsoft.EntityFrameworkCore;
 using Serilog;
 
 var builder = WebApplication.CreateBuilder(args);
@@ -13,6 +15,9 @@ try
     // Learn more about configuring Swagger/OpenAPI at https://aka.ms/aspnetcore/swashbuckle
     builder.Services.AddEndpointsApiExplorer();
     builder.Services.AddSwaggerGen();
+
+    var connectionString = builder.Configuration.GetConnectionString("DefaultConnectionString");
+    builder.Services.AddDbContext<CustomerContext>(option => option.UseNpgsql(connectionString));
 
     var app = builder.Build();
 
