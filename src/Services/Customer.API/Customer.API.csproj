@@ -28,10 +28,4 @@
     <ProjectReference Include="..\..\BuildingBlocks\Infrastructure\Infrastructure.csproj" />
   </ItemGroup>
 
-  <ItemGroup>
-    <Folder Include="ate\" />
-    <Folder Include="Repositories\" />
-    <Folder Include="Services\Interfaces\" />
-  </ItemGroup>
-
 </Project>
