@@ -2,7 +2,7 @@ version: '3.8'
 
 services:
   #database section
-  
+
   #orderdb: sql server
   orderdb:
     container_name: orderdb
@@ -14,7 +14,7 @@ services:
       - sqlserver_data:/var/lib/sqlserver/data
     ports:
       - "1435:1433"
-        
+
   #productdb: mysql
   productdb:
     container_name: productdb
@@ -25,7 +25,7 @@ services:
       - mysql_data:/var/lib/mysql
     ports:
       - "3306:3306"
-  
+
   #customerdb: postgres
   customerdb:
     container_name: customerdb
@@ -38,14 +38,14 @@ services:
       - "5433:5432"
     volumes:
       - postgres_data:/var/lib/postgresql/data
-    
+
   #basketdb: redis
   basketdb:
     container_name: basketdb
     restart: always
     ports:
       - "6379:6379"
-  
+
   #inventorydb: mongo
   inventorydb:
     container_name: inventorydb
@@ -54,16 +54,16 @@ services:
       - "27017:27017"
     volumes:
       - mongo_data:/data/db
-  
+
   #infrastructure section
-  
+
   rabbitmq:
     container_name: rabbitmq
     restart: always
     ports:
       - "5672:5672"
       - "15672:15672"
-    
+
   pgadmin:
     container_name: pgadmin
     environment:
@@ -74,7 +74,7 @@ services:
       - "5050:80"
     volumes:
       - pgadmin_data:/root/.pgadmin
-    
+
   portainer:
     container_name: portainer
     restart: always
@@ -84,7 +84,7 @@ services:
     volumes:
       - /var/run/docker.sock:/var/run/docker.sock
       - portainer_data:/data
-  
+
   elasticsearch:
     container_name: elasticsearch
     environment:
@@ -96,7 +96,7 @@ services:
       - "9200:9200"
     volumes:
       - elasticsearch_data:/usr/share/elasticsearch/data
-  
+
   kibana:
     container_name: kibana
     environment:
@@ -105,8 +105,7 @@ services:
       - elasticsearch
     ports:
       - "5601:5601"
-      
-      
+
   #microservices api sections
   product.api:
     container_name: product.api
@@ -114,8 +113,20 @@ services:
       - ASPNETCORE_ENVIRONMENT=Development
       - ASPNETCORE_URLS=http://+:80
       - "ConnectionStrings:DefaultConnectionString=Server=productdb;Port=3306;Database=ProductDB;Uid=root;Pwd=Passw0rd!;"
-    depends_on: 
+    depends_on:
       - productdb
     ports:
       - "6002:80"
+    restart: always
+
+  customer.api:
+    container_name: customer.api
+    environment:
+      - ASPNETCORE_ENVIRONMENT=Development
+      - ASPNETCORE_URLS=http://+:80
+      - "ConnectionStrings:DefaultConnectionString=Server=customerdb;Port=5432;Database=Customerdb;User Id=admin;Password=admin1234"
+    depends_on:
+      - customerdb
+    ports:
+      - "6003:80"
     restart: always

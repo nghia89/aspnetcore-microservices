@@ -4,13 +4,13 @@ services:
   #database section
   orderdb:
     image: mcr.microsoft.com/mssql/server:2019-latest
-  
+
   productdb:
     image: mysql:8.0.29
-  
+
   customerdb:
     image: postgres:alpine3.16
-    
+
   basketdb:
     image: redis:alpine
 
@@ -32,15 +32,20 @@ services:
 
   kibana:
     image: docker.elastic.co/kibana/kibana:7.17.2
-    
+
   #microservices api section
   product.api:
     image: ${DOCKER_REGISTRY-}product-api:${PLATFORM:-linux}-${TAG:-latest}
     build:
       context: .
       dockerfile: Services/Product.API/Dockerfile
-    
-    
+
+  customer.api:
+    image: ${DOCKER_REGISTRY-}customer-api:${PLATFORM:-linux}-${TAG:-latest}
+    build:
+      context: .
+      dockerfile: Services/Customer.API/Dockerfile
+
 #network section
 networks:
   default:
