@@ -35,6 +35,5 @@ namespace Ordering.Domain.Entities
         public string InvoiceAddress { get; set; }
 
         public EOrderStatus Status { get; set; }
-
     }
 }
