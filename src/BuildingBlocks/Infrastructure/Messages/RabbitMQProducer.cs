@@ -1,9 +1,11 @@
 
 
 using System.Text;
+using System.Threading.Channels;
 using Contracts.Common.Interfaces;
 using Contracts.Messages;
 using RabbitMQ.Client;
+using RabbitMQ.Client.Events;
 
 namespace Infrastructure.Messages;
 
@@ -23,16 +25,20 @@ public class RabbitMQProducer : IMessageProducer
             HostName = "localhost"
         };
 
-        var connection = connectionFactory.CreateConnection();
-        using var chanel = connection.CreateModel();
-        chanel.QueueDeclare("orders", false);
+        using var connection = connectionFactory.CreateConnection();
+        using var channel = connection.CreateModel();
+        channel.QueueDeclare(queue: "orders",
+                         durable: false,
+                         exclusive: false,
+                         autoDelete: false,
+                         arguments: null);
         var jsonData = _serializeService.Serialize(message);
         var body = Encoding.UTF8.GetBytes(jsonData);
 
-        var properties = chanel.CreateBasicProperties();
+        var properties = channel.CreateBasicProperties();
 
         properties.Persistent = false;
-        chanel.BasicPublish("", "orders", properties, body);
+        channel.BasicPublish("", "orders", properties, body);
     }
 }
 
