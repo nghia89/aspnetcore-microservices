@@ -12,20 +12,23 @@ namespace Basket.API.Extensions
 {
     public static class ServiceExtensions
     {
-        public static IServiceCollection ConfigureServices(this IServiceCollection services) =>
-        services.AddScoped<IBasketRepository, BasketRepository>()
-            .AddTransient<ISerializeService, SerializeService>();
-
-        internal static IServiceCollection AddConfigurationSettings(this IServiceCollection services, IConfiguration configuration)
+        internal static IServiceCollection AddConfigurationSettings(this IServiceCollection services,
+         IConfiguration configuration)
         {
-            var eventBusSetings = configuration.GetSection(nameof(EventBusSettings))
-            .Get<EventBusSettings>();
-            services.AddSingleton(eventBusSetings);
-            var cacheSettings = configuration.GetSection(nameof(EventBusSettings))
-           .Get<EventBusSettings>();
+            var eventBusSettings = configuration.GetSection(nameof(EventBusSettings))
+                .Get<EventBusSettings>();
+            services.AddSingleton(eventBusSettings);
+            var cacheSettings = configuration.GetSection(nameof(CacheSettings))
+                .Get<CacheSettings>();
             services.AddSingleton(cacheSettings);
+
             return services;
         }
+
+        public static IServiceCollection ConfigureServices(this IServiceCollection services) =>
+            services.AddScoped<IBasketRepository, BasketRepository>()
+                .AddTransient<ISerializeService, SerializeService>()
+            ;
 
         public static void ConfigureRedis(this IServiceCollection services, IConfiguration configuration)
         {
@@ -39,7 +42,6 @@ namespace Basket.API.Extensions
                 options.Configuration = settings.ConnectionString;
             });
         }
-
 
         public static void ConfigureMassTransit(this IServiceCollection services)
         {

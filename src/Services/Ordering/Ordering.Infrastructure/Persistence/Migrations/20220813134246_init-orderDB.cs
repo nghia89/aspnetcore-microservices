@@ -5,7 +5,7 @@ using Microsoft.EntityFrameworkCore.Migrations;
 
 namespace Ordering.Infrastructure.Persistence.Migrations
 {
-    public partial class init_orderDB : Migration
+    public partial class initorderDB : Migration
     {
         protected override void Up(MigrationBuilder migrationBuilder)
         {
