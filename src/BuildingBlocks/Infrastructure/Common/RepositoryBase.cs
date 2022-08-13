@@ -1,5 +1,6 @@
 ﻿using Contracts.Common.Interfaces;
 using Contracts.Domains;
+using Contracts.Domains.Interfaces;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Storage;
 
@@ -59,6 +60,7 @@ namespace Infrastructure.Common
             _dbContext.Set<T>().Remove(entity);
             return Task.CompletedTask;
         }
+        public void Delete(T entity) => _dbContext.Set<T>().Remove(entity);
 
         public Task DeleteListAsync(IEnumerable<T> entities)
         {

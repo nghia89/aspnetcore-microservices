@@ -8,7 +8,7 @@ using System.Linq.Expressions;
 using System.Text;
 using System.Threading.Tasks;
 
-namespace Contracts.Common.Interfaces;
+namespace Contracts.Domains.Interfaces;
 public interface IRepositoryQueryBase<T, in K> where T : EntityBase<K>
 {
     IQueryable<T> FindAll(bool trackChanges = false);
@@ -34,6 +34,7 @@ public interface IRepositoryBaseAsync<T, K> : IRepositoryQueryBase<T, K>
     Task<IList<K>> CreateListAsync(IEnumerable<T> entities);
     Task UpdateAsync(T entity);
     Task UpdateListAsync(IEnumerable<T> entities);
+    void Delete(T entity);
     Task DeleteAsync(T entity);
     Task DeleteListAsync(IEnumerable<T> entities);
     Task<int> SaveChangesAsync();

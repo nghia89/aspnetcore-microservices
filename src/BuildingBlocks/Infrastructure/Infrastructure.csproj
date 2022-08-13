@@ -20,5 +20,9 @@
 
   <ItemGroup>
     <None Remove="RabbitMQ.Client" />
+    <None Remove="Extensions\" />
+  </ItemGroup>
+  <ItemGroup>
+    <Folder Include="Extensions\" />
   </ItemGroup>
 </Project>

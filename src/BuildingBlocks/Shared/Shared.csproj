@@ -11,4 +11,10 @@
   </ItemGroup>
 
 
+  <ItemGroup>
+    <None Remove="Configuarations\" />
+  </ItemGroup>
+  <ItemGroup>
+    <Folder Include="Configuarations\" />
+  </ItemGroup>
 </Project>

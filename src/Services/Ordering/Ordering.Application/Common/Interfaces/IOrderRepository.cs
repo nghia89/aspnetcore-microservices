@@ -1,5 +1,6 @@
 ﻿using Ordering.Domain.Entities;
 using Contracts.Common.Interfaces;
+using Contracts.Domains.Interfaces;
 
 namespace Ordering.Application.Common.Interfaces
 {
@@ -7,5 +8,9 @@ namespace Ordering.Application.Common.Interfaces
     {
         Task<IEnumerable<Order>> GetOrdersByUserName(string userName);
         Task<Order> CreateOrder(Order model);
+
+
+        Task<Order> UpdateOrderAsync(Order order);
+        void DeleteOrder(Order order);
     }
 }

@@ -25,10 +25,32 @@
     <ProjectReference Include="..\..\..\BuildingBlocks\Contracts\Contracts.csproj" />
     <ProjectReference Include="..\..\..\BuildingBlocks\Shared\Shared.csproj" />
     <ProjectReference Include="..\Ordering.Domain\Ordering.Domain.csproj" />
+    <ProjectReference Include="..\..\..\BuildingBlocks\Infrastructure\Infrastructure.csproj" />
+    <ProjectReference Include="..\..\..\BuildingBlocks\EventBus.Messages\EventBus.Messages.csproj" />
   </ItemGroup>
 
   <ItemGroup>
     <Folder Include="Common\Features\V1\Queries\" />
+    <Folder Include="Features\" />
+    <Folder Include="Features\V1\" />
+    <Folder Include="Features\V1\Orders\" />
+    <Folder Include="Features\V1\Orders\Commands\" />
+    <Folder Include="Features\V1\Orders\Common\" />
+    <Folder Include="Features\V1\Orders\Queries\" />
+    <Folder Include="Features\V1\Orders\Commands\CreateOrder\" />
+    <Folder Include="Features\V1\Orders\Commands\DeleteOrder\" />
+    <Folder Include="Features\V1\Orders\Commands\UpdateOrder\" />
   </ItemGroup>
 
+  <ItemGroup>
+    <None Remove="Features\" />
+    <None Remove="Features\V1\" />
+    <None Remove="Features\V1\Orders\" />
+    <None Remove="Features\V1\Orders\Commands\" />
+    <None Remove="Features\V1\Orders\Common\" />
+    <None Remove="Features\V1\Orders\Queries\" />
+    <None Remove="Features\V1\Orders\Commands\CreateOrder\" />
+    <None Remove="Features\V1\Orders\Commands\DeleteOrder\" />
+    <None Remove="Features\V1\Orders\Commands\UpdateOrder\" />
+  </ItemGroup>
 </Project>

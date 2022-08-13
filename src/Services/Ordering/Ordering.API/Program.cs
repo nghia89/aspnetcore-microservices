@@ -1,8 +1,6 @@
 using Common.Logging;
 using Contracts.Common.Interfaces;
-using Contracts.Messages;
 using Infrastructure.Common;
-using Infrastructure.Messages;
 using Ordering.API.Extensions;
 using Ordering.Application;
 using Ordering.Infrastructure;
@@ -27,8 +25,10 @@ try
     builder.Host.AddAppConfigurations();
     builder.Services.AddInfrastructureServices(builder.Configuration);
     builder.Services.AddApplicationServices();
+    builder.Services.ConfigureMassTransit();
+
+
     builder.Services.AddControllers();
-    builder.Services.AddScoped<IMessageProducer, RabbitMQProducer>();
     builder.Services.AddScoped<ISerializeService, SerializeService>();
     // Learn more about configuring Swagger/OpenAPI at https://aka.ms/aspnetcore/swashbuckle
     builder.Services.AddEndpointsApiExplorer();

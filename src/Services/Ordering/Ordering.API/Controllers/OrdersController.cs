@@ -1,12 +1,15 @@
 ﻿using AutoMapper;
-using Contracts.Messages;
 using Contracts.Services;
 using MediatR;
 using Microsoft.AspNetCore.Mvc;
 using Ordering.Application.Common.Features.V1.Orders;
 using Ordering.Application.Common.Interfaces;
 using Ordering.Application.Common.Models;
+using Ordering.Application.Features.V1.Orders;
+using Ordering.Application.Features.V1.Orders.Commands.UpdateOrder;
+using Ordering.Application.Features.V1.Orders.Queries;
 using Ordering.Domain.Entities;
+using Shared.SeedWork;
 using Shared.Services;
 using System.ComponentModel.DataAnnotations;
 using System.Net;
@@ -21,28 +24,21 @@ public class OrdersController : ControllerBase
     private readonly ISmtpEmailService _smtpEmailService;
     private readonly IOrderRepository _orderRepository;
     private readonly IMapper _mapper;
-    private readonly IMessageProducer _messageProducer;
-    public OrdersController(IMediator mediator, ISmtpEmailService smtpEmailService, IOrderRepository orderRepository, IMapper mapper, IMessageProducer messageProducer = null)
+
+    public OrdersController(IMediator mediator, ISmtpEmailService smtpEmailService, IOrderRepository orderRepository, IMapper mapper)
     {
         _mediator = mediator ?? throw new ArgumentNullException(nameof(mediator));
         _smtpEmailService = smtpEmailService ?? throw new ArgumentNullException(nameof(smtpEmailService));
         _orderRepository = orderRepository;
         _mapper = mapper;
-        _messageProducer = messageProducer;
     }
 
     private static class RouteNames
     {
         public const string GetOrders = nameof(GetOrders);
-    }
-
-    [HttpGet("{username}", Name = RouteNames.GetOrders)]
-    [ProducesResponseType(typeof(IEnumerable<OrderDto>), (int)HttpStatusCode.OK)]
-    public async Task<ActionResult<IEnumerable<OrderDto>>> GetOrdersByUserName([Required] string username)
-    {
-        var query = new GetOrdersQuery(username);
-        var result = await _mediator.Send(query);
-        return Ok(result);
+        public const string CreateOrder = nameof(CreateOrder);
+        public const string UpdateOrder = nameof(UpdateOrder);
+        public const string DeleteOrder = nameof(DeleteOrder);
     }
 
     [HttpGet("test-email")]
@@ -58,15 +54,42 @@ public class OrdersController : ControllerBase
         await _smtpEmailService.SendEmailAsync(from);
     }
 
-    [HttpPost("add")]
-    [ProducesResponseType(typeof(IEnumerable<OrderDto>), (int)HttpStatusCode.OK)]
-    public async Task<ActionResult<IEnumerable<OrderDto>>> Add([FromBody] OrderDto model)
-    {
-        var order = _mapper.Map<Order>(model);
-        var entity = await _orderRepository.CreateOrder(order);
-        await _orderRepository.SaveChangesAsync();
+    #region CRUD
 
-        _messageProducer.SendMessage(entity);
-        return Ok(_mapper.Map<OrderDto>(entity));
+    [HttpGet("{username}", Name = RouteNames.GetOrders)]
+    [ProducesResponseType(typeof(IEnumerable<OrderDto>), (int)HttpStatusCode.OK)]
+    public async Task<ActionResult<IEnumerable<OrderDto>>> GetOrdersByUserName([Required] string username)
+    {
+        var query = new GetOrdersByUserNameQuery(username);
+        var result = await _mediator.Send(query);
+        return Ok(result);
     }
+
+    [HttpPost(Name = RouteNames.CreateOrder)]
+    [ProducesResponseType(typeof(ApiResult<long>), (int)HttpStatusCode.OK)]
+    public async Task<ActionResult<ApiResult<long>>> CreateOrder([FromBody] CreateOrderCommand command)
+    {
+        var result = await _mediator.Send(command);
+        return Ok(result);
+    }
+
+    [HttpPut("{id:long}", Name = RouteNames.UpdateOrder)]
+    [ProducesResponseType(typeof(ApiResult<OrderDto>), (int)HttpStatusCode.OK)]
+    public async Task<ActionResult<OrderDto>> UpdateOrder([Required] long id, [FromBody] UpdateOrderCommand command)
+    {
+        command.SetId(id);
+        var result = await _mediator.Send(command);
+        return Ok(result);
+    }
+
+    [HttpDelete("{id:long}", Name = RouteNames.DeleteOrder)]
+    [ProducesResponseType(typeof(NoContentResult), (int)HttpStatusCode.NoContent)]
+    public async Task<ActionResult> DeleteOrder([Required] long id)
+    {
+        var command = new DeleteOrderCommand(id);
+        await _mediator.Send(command);
+        return NoContent();
+    }
+
+    #endregion
 }
