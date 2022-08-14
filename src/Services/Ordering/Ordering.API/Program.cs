@@ -40,8 +40,7 @@ try
     if (app.Environment.IsDevelopment())
     {
         app.UseSwagger();
-        app.UseSwaggerUI(c => c.SwaggerEndpoint("/swagger/v1/swagger.json",
-            $"{builder.Environment.ApplicationName} v1"));
+        app.UseSwaggerUI();
     }
     // Initialise and seed database
     using (var scope = app.Services.CreateScope())

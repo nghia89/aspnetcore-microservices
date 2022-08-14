@@ -140,6 +140,7 @@ services:
       - "EventBusSettings:HostAddress=amqp://guest:guest@rabbitmq:5672"
     depends_on: 
       - basketdb
+      - rabbitmq
     ports:
       - "6004:80"
     restart: always
@@ -153,6 +154,7 @@ services:
       - "EventBusSettings:HostAddress=amqp://guest:guest@rabbitmq:5672"
     depends_on:
       - orderdb
+      - rabbitmq
     ports:
       - "6005:80"
     restart: always
