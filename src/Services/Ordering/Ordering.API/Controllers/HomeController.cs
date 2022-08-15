@@ -2,11 +2,11 @@
 
 namespace Ordering.API.Controllers
 {
-    public class HomeController : Controller
+    public class HomeController : ControllerBase
     {
         public IActionResult Index()
         {
-            return Redirect("~/swagger");
+            return Redirect("~/swagger/index.html");
         }
     }
 }

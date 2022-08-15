@@ -30,8 +30,11 @@ public interface IRepositoryQueryBase<T, K, TContext> : IRepositoryQueryBase<T, 
 public interface IRepositoryBaseAsync<T, K> : IRepositoryQueryBase<T, K>
     where T : EntityBase<K>
 {
+    void Create(T entity);
     Task<K> CreateAsync(T entity);
     Task<IList<K>> CreateListAsync(IEnumerable<T> entities);
+    IList<K> CreateList(IEnumerable<T> entities);
+    void Update(T entity);
     Task UpdateAsync(T entity);
     Task UpdateListAsync(IEnumerable<T> entities);
     void Delete(T entity);

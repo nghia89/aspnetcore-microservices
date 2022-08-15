@@ -22,9 +22,9 @@ namespace Ordering.Infrastructure.Repositories
         public async Task<IEnumerable<Order>> GetOrdersByUserName(string userName) =>
             await FindByCondition(x => x.UserName.Equals(userName)).ToListAsync();
 
-        public async Task<Order> CreateOrder(Order model)
+        public Order CreateOrder(Order model)
         {
-            await CreateAsync(model);
+            Create(model);
             return model;
         }
 
