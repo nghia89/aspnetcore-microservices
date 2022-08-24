@@ -1,5 +1,5 @@
 ﻿using System;
-namespace Shared.Configuarations
+namespace Shared.Configurations
 {
     public class EventBusSettings
     {

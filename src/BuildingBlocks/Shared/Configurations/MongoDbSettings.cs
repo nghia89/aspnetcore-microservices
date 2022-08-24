@@ -4,9 +4,10 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 
-namespace Infrastructure.Shared.DTOs.Product
+namespace Shared.Configurations
 {
-    public class UpdateProductDto : CreateOrUpdateProductDto
+    public class MongoDbSettings : DatabaseSettings
     {
+        public string DatabaseName { get; set; }
     }
 }

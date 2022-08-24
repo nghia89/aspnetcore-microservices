@@ -5,7 +5,7 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 
-namespace Infrastructure.Shared.DTOs.Product
+namespace Shared.DTOs.Product
 {
     public abstract class CreateOrUpdateProductDto
     {
