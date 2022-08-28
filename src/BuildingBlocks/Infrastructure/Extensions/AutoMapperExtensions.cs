@@ -1,10 +1,7 @@
-﻿using AutoMapper;
-using System;
-using System.Collections.Generic;
-using System.Linq;
+﻿
+using AutoMapper;
+using Infrastructure.Common.Models;
 using System.Reflection;
-using System.Text;
-using System.Threading.Tasks;
 
 namespace Infrastructure.Mappings;
 
@@ -22,4 +19,5 @@ public static class AutoMapperExtension
                 expression.ForMember(property.Name, opt => opt.Ignore());
         return expression;
     }
+
 }

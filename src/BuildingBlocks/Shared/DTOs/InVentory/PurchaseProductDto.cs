@@ -1,4 +1,5 @@
-﻿using System;
+﻿using Shared.Enums.InVentory;
+using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Text;
@@ -8,9 +9,17 @@ namespace Shared.DTOs.InVentory
 {
     public class PurchaseProductDto
     {
-        public string ItemNo { get; set; }
-        public string DocumentNo { get; set; }
+        public EDocumentType DocumentType => EDocumentType.Purchase;
+
+        private string _itemNo { get; set; }
+
+        public string GetItemNo() => _itemNo;
+
+        public void SetItemNo(string itemNo)
+        {
+            _itemNo = itemNo;
+        }
+
         public int Quantity { get; set; }
-        public string ExternalDocumentNo { get; set; }
     }
 }

@@ -1,10 +1,11 @@
 ﻿using Contracts.Domains;
+using Infrastructure.Extensions;
 using MongoDB.Bson.Serialization.Attributes;
 using Shared.Enums.InVentory;
 
 namespace Inventory.Product.API.Entities;
 
-//[BsonCollection("InventoryEntries")]
+[BsonCollection("InventoryEntries")]
 public class InventoryEntry : MongoEntity
 {
     public InventoryEntry()
