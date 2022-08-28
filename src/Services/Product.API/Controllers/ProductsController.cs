@@ -1,8 +1,8 @@
 ﻿using AutoMapper;
-using Infrastructure.Shared.DTOs.Product;
 using Microsoft.AspNetCore.Mvc;
 using Product.API.Entities;
 using Product.API.Repositories.Interfaces;
+using Shared.DTOs.Product;
 using System.ComponentModel.DataAnnotations;
 
 namespace Product.API.Controllers;

@@ -3,7 +3,7 @@ using Infrastructure.Extensions;
 using MassTransit;
 using Microsoft.Extensions.DependencyInjection.Extensions;
 using Ordering.API.Appliction.IntegrationEvents.EventsHandler;
-using Shared.Configuarations;
+using Shared.Configurations;
 
 namespace Ordering.API.Extensions
 {

@@ -1,7 +1,8 @@
 ﻿using AutoMapper;
 using Infrastructure.Mappings;
-using Infrastructure.Shared.DTOs.Product;
+ 
 using Product.API.Entities;
+using Shared.DTOs.Product;
 
 namespace Product.API
 {
