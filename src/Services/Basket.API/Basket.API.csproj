@@ -28,10 +28,10 @@
 	<ItemGroup>
 		<None Remove="MassTransit.RabbitMQ" />
 		<None Remove="AutoMapper.Extensions.Microsoft.DependencyInjection" />
-		<None Remove="stock.proto" />
+		<None Remove="Protos\stock.proto" />
 	</ItemGroup>
 	<ItemGroup>
-	  <Protobuf Include="stock.proto" GrpcServices="Client">
+	  <Protobuf Include="Protos\stock.proto" GrpcServices="Client">
 	    <CopyToOutputDirectory>Always</CopyToOutputDirectory>
 	  </Protobuf>
 	</ItemGroup>
