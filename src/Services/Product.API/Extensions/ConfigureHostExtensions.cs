@@ -1,4 +1,7 @@
-﻿namespace Product.API.Extensions
+﻿using Common.Logging;
+using Serilog;
+
+namespace Product.API.Extensions
 {
     public static class ConfigureHostExtensions
     {
@@ -10,7 +13,7 @@
                 config.AddJsonFile("appsettings.json", optional: false, reloadOnChange: true)
                     .AddJsonFile($"appsettings.{env.EnvironmentName}.json", optional: true, reloadOnChange: true)
                     .AddEnvironmentVariables();
-            });
+            }).UseSerilog(Serilogger.Configure);
         }
     }
 }

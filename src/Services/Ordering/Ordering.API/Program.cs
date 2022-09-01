@@ -1,6 +1,7 @@
 using Common.Logging;
 using Contracts.Common.Interfaces;
 using Infrastructure.Common;
+using Infrastructure.Middlewares;
 using Ordering.API.Extensions;
 using Ordering.Application;
 using Ordering.Infrastructure;
@@ -50,7 +51,7 @@ try
         await orderContextSeed.SeedAsync();
     }
 
-
+    app.UseMiddleware<ErrorWrappingMiddleware>();
     //app.UseHttpsRedirection();
 
     app.UseAuthorization();

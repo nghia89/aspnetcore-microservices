@@ -1,3 +1,5 @@
+using Common.Logging;
+using Infrastructure.Middlewares;
 using Inventory.Product.API.Extensions;
 using Microsoft.AspNetCore.Builder;
 using Serilog;
@@ -14,7 +16,7 @@ try
     // Add services to the container.
     builder.Services.AddConfigurationSettings(builder.Configuration);
     builder.Services.AddControllers();
-
+    builder.Host.UseSerilog(Serilogger.Configure);
     // Learn more about configuring Swagger/OpenAPI at https://aka.ms/aspnetcore/swashbuckle
     builder.Services.AddEndpointsApiExplorer();
     builder.Services.AddInfrastructureServices();
@@ -32,7 +34,7 @@ try
     }
 
     app.UseHttpsRedirection();
-
+    app.UseMiddleware<ErrorWrappingMiddleware>();
     app.UseAuthorization();
 
     app.MapControllerRoute(

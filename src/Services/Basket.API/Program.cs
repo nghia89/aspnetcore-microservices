@@ -1,6 +1,7 @@
 using Basket.API;
 using Basket.API.Extensions;
 using Common.Logging;
+using Infrastructure.Middlewares;
 using Serilog;
 
 var builder = WebApplication.CreateBuilder(args);
@@ -10,7 +11,6 @@ Log.Information("Start Basket API up");
 try
 {
     builder.Services.AddConfigurationSettings(builder.Configuration);
-    builder.Host.UseSerilog(Serilogger.Configure);
     builder.Host.AddAppConfigurations();
     builder.Services.AddAutoMapper(cfg => cfg.AddProfile(new MappingProfile()));
 
@@ -40,7 +40,7 @@ try
     }
 
     // app.UseHttpsRedirection();
-
+    app.UseMiddleware<ErrorWrappingMiddleware>();
     app.UseAuthorization();
 
     app.MapDefaultControllerRoute();

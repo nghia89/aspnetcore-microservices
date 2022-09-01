@@ -6,6 +6,7 @@ using Customer.API.Repositories.Interfaces;
 using Customer.API.Services;
 using Customer.API.Services.Interfaces;
 using Infrastructure.Common;
+using Infrastructure.Middlewares;
 using Microsoft.EntityFrameworkCore;
 using Serilog;
 
@@ -41,7 +42,7 @@ try
     }
 
     app.UseHttpsRedirection();
-
+    app.UseMiddleware<ErrorWrappingMiddleware>();
     app.UseAuthorization();
 
     app.MapControllers();
