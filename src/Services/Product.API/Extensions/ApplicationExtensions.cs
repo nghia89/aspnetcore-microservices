@@ -10,7 +10,7 @@
             app.UseRouting();
             // app.UseHttpsRedirection(); //for production only
 
-            app.UseAuthorization();
+        //    app.UseAuthorization();
 
             app.UseEndpoints(endpoints =>
             {

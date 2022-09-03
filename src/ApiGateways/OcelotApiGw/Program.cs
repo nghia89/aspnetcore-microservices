@@ -12,6 +12,7 @@ try
 {
     // Add services to the container.
     builder.Host.AddAppConfigurations();
+    builder.Services.AddConfigurationSettings(builder.Configuration);
     builder.Services.AddControllers();
     // Learn more about configuring Swagger/OpenAPI at https://aka.ms/aspnetcore/swashbuckle
     builder.Services.AddEndpointsApiExplorer();
@@ -23,29 +24,33 @@ try
     //Configure the HTTP request pipeline.
     if (app.Environment.IsDevelopment())
     {
-        app.UseSwagger();
-        app.UseSwaggerUI();
+        //app.UseSwagger();
+        //app.UseSwaggerUI(c =>
+        //{
+        //    app.UseSwaggerUI(c => c.SwaggerEndpoint("/swagger/v1/swagger.json",
+        //        $"{builder.Environment.ApplicationName} v1"));
+        //});
     }
+
 
     app.UseCors("CorsPolicy");
     app.UseMiddleware<ErrorWrappingMiddleware>();
- 
 
- 
+    app.UseAuthentication();
     app.UseRouting();
+    app.UseAuthorization();
     app.UseEndpoints(endpoints =>
     {
         endpoints.MapGet("/", context =>
         {
-            // await context.Response.WriteAsync($"Hello TEDU members! This is {builder.Environment.ApplicationName}");
             context.Response.Redirect("swagger/index.html");
             return Task.CompletedTask;
         });
     });
 
-    //app.UseSwaggerForOcelotUI(
-    //  opt => { opt.PathToSwaggerGenerator = "/swagger/docs"; });
-
+    app.UseSwaggerForOcelotUI(
+      opt => { opt.PathToSwaggerGenerator = "/swagger/docs"; });
+    app.MapControllers();
     await app.UseOcelot();
     app.Run();
 }

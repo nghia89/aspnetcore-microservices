@@ -1,17 +1,33 @@
 ﻿using Contracts.Common.Interfaces;
 using Contracts.Domains.Interfaces;
+using Contracts.Identity;
 using Infrastructure.Common;
+using Infrastructure.Extensions;
+using Infrastructure.Identity;
+using Microsoft.AspNetCore.Authentication.JwtBearer;
 using Microsoft.EntityFrameworkCore;
+using Microsoft.IdentityModel.Tokens;
 using MySqlConnector;
 using Pomelo.EntityFrameworkCore.MySql.Infrastructure;
 using Product.API.Persistence;
 using Product.API.Repositories;
 using Product.API.Repositories.Interfaces;
+using Shared.Configurations;
+using System.Text;
 
 namespace Product.API.Extensions
 {
     public static class ServiceExtensions
     {
+        internal static IServiceCollection AddConfigurationSettings(this IServiceCollection services,
+        IConfiguration configuration)
+        {
+            var jwtSettings = configuration.GetSection(nameof(JwtSettings))
+                .Get<JwtSettings>();
+            services.AddSingleton(jwtSettings);
+
+            return services;
+        }
         public static IServiceCollection AddInfrastructure(this IServiceCollection services, IConfiguration configuration)
         {
             services.AddControllers();
