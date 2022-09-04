@@ -1,4 +1,3 @@
- 
 FROM mcr.microsoft.com/dotnet/aspnet:6.0 AS base
 WORKDIR /app
 EXPOSE 80
@@ -6,15 +5,13 @@ EXPOSE 443
 
 FROM mcr.microsoft.com/dotnet/sdk:6.0 AS build
 WORKDIR /src
-
-COPY ["ApiGateways/OcelotApiGw/OcelotApiGw.csproj", "ApiGateways/OcelotApiGw/"]
-COPY ["BuildingBlocks/Shared/Shared.csproj", "BuildingBlocks/Shared/"]
-COPY ["BuildingBlocks/Common.Logging/Common.Logging.csproj", "BuildingBlocks/Common.Logging/"]
-COPY ["BuildingBlocks/Infrastructure/Infrastructure.csproj", "BuildingBlocks/Infrastructure/"]
+COPY ["OcelotApiGw/OcelotApiGw.csproj", "OcelotApiGw/"]
 COPY ["BuildingBlocks/Contracts/Contracts.csproj", "BuildingBlocks/Contracts/"]
-RUN dotnet restore "ApiGateways/OcelotApiGw/OcelotApiGw.csproj"
+COPY ["BuildingBlocks/Infrastructure/Infrastructure.csproj", "BuildingBlocks/Infrastructure/"]
+COPY ["BuildingBlocks/Common.Logging/Common.Logging.csproj", "BuildingBlocks/Common.Logging/"]
+RUN dotnet restore "OcelotApiGw/OcelotApiGw.csproj"
 COPY . .
-WORKDIR "/src/ApiGateways/OcelotApiGw"
+WORKDIR "/src/OcelotApiGw"
 RUN dotnet build "OcelotApiGw.csproj" -c Release -o /app/build
 
 FROM build AS publish

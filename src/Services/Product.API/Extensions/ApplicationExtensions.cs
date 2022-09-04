@@ -4,8 +4,8 @@
     {
         public static void UseInfrastructure(this IApplicationBuilder app)
         {
-            app.UseSwagger();
-            app.UseSwaggerUI();
+            //app.UseSwagger();
+            //app.UseSwaggerUI();
 
             app.UseRouting();
             // app.UseHttpsRedirection(); //for production only

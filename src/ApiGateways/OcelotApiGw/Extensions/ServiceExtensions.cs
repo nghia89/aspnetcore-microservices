@@ -23,9 +23,9 @@ namespace OcelotApiGw.Extensions
         public static void ConfigureOcelot(this IServiceCollection services, IConfiguration configuration)
         {
             services.AddOcelot(configuration);
-               
+
             services.AddTransient<ITokenService, TokenService>();
-            services.AddJwtAuthentication();
+            //services.AddJwtAuthentication();
             services.AddSwaggerForOcelot(configuration, x =>
             {
                 x.GenerateDocsForGatewayItSelf = false;

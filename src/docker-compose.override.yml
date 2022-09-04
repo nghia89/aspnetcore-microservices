@@ -11,7 +11,7 @@ services:
       ACCEPT_EULA: "Y"
     restart: always
     volumes:
-      - sqlserver_data:/var/lib/sqlserver/data 
+      - sqlserver_data:/var/lib/sqlserver/data
     ports:
       - "1435:1433"
 
@@ -139,7 +139,7 @@ services:
       - "CacheSettings:ConnectionString=basketdb:6379"
       - "EventBusSettings:HostAddress=amqp://guest:guest@rabbitmq:5672"
       - "GrpcSettings:StockUrl=http://inventory.grpc"
-    depends_on: 
+    depends_on:
       - basketdb
       - rabbitmq
     ports:
@@ -170,7 +170,7 @@ services:
     depends_on:
       - inventorydb
     ports:
-       - "6006:80"
+      - "6006:80"
     restart: always
 
   inventory.grpc:
@@ -183,7 +183,7 @@ services:
     depends_on:
       - inventorydb
     ports:
-       - "6007:80"
+      - "6007:80"
     restart: always
 
   apigw.ocelot:
@@ -201,4 +201,3 @@ services:
     ports:
       - "6001:80"
     restart: always
-    

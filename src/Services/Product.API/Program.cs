@@ -16,6 +16,12 @@ try
     builder.Services.AddInfrastructure(builder.Configuration);
 
     var app = builder.Build();
+    if (app.Environment.IsDevelopment())
+    {
+        app.UseSwagger();
+        app.UseSwaggerUI(c => c.SwaggerEndpoint("/swagger/v1/swagger.json",
+            $"{builder.Environment.ApplicationName} v1"));
+    }
     app.UseInfrastructure();
     app.UseMiddleware<ErrorWrappingMiddleware>();
     app.MigrateDatabase<ProductContext>((context, _) =>
