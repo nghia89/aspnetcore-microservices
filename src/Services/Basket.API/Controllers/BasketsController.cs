@@ -2,6 +2,7 @@
 using Basket.API.Entities;
 using Basket.API.GrpcStockServices;
 using Basket.API.Repositories.Interfaces;
+using Basket.API.Services.Interfaces;
 using EventBus.Messages.IntegrationEvents.Events;
 using MassTransit;
 using Microsoft.AspNetCore.Mvc;
@@ -20,12 +21,14 @@ namespace Basket.API.Controllers
         private readonly IMapper _mapper;
         private readonly IPublishEndpoint _publishEndpoint;
         private readonly StockItemGrpcService _stockItemGrpcService;
-        public BasketsController(IBasketRepository basketRepository, IMapper mapper, IPublishEndpoint publishEndpoint, StockItemGrpcService stockItemGrpcService )
+        private readonly IEmailTemplateService _emailTemplateService;
+        public BasketsController(IBasketRepository basketRepository, IMapper mapper, IPublishEndpoint publishEndpoint, StockItemGrpcService stockItemGrpcService, IEmailTemplateService emailTemplateService)
         {
             _basketRepository = basketRepository;
             _mapper = mapper;
             _publishEndpoint = publishEndpoint;
             _stockItemGrpcService = stockItemGrpcService;
+            _emailTemplateService = emailTemplateService;
         }
 
         [HttpGet("{username}", Name = "GetBasket")]
@@ -81,6 +84,17 @@ namespace Basket.API.Controllers
             await _basketRepository.DeleteBasketFromUserName(basket.Username);
 
             return Accepted();
+        }
+
+        [HttpPost("[action]", Name = "SenEmail")]
+        public ContentResult SenEmail()
+        {
+            var email = _emailTemplateService.GenerateReminderCheckoutOrderEmail("customer");
+            return new ContentResult
+            {
+                Content = email,
+                ContentType = "text/html"
+            };
         }
     }
 }

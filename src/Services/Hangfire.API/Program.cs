@@ -1,33 +1,44 @@
+using Hangfire.API.Extensions;
+using Infrastructure.ScheduledJobs;
 using Serilog;
 
 var builder = WebApplication.CreateBuilder(args);
 
-Log.Information("Start Hangfire API up");
+Log.Information("Start Product API up");
 
 try
-{
-
+{ 
     // Add services to the container.
 
-    builder.Services.AddControllers();
+builder.Services.AddControllers();
+    builder.Services.AddConfigurationSettings(builder.Configuration);
     // Learn more about configuring Swagger/OpenAPI at https://aka.ms/aspnetcore/swashbuckle
     builder.Services.AddEndpointsApiExplorer();
     builder.Services.AddSwaggerGen();
-
+    builder.Services.AddTeduHangfireService();
+    builder.Services.ConfigureServices();
     var app = builder.Build();
 
     // Configure the HTTP request pipeline.
     if (app.Environment.IsDevelopment())
     {
         app.UseSwagger();
-        app.UseSwaggerUI();
+        app.UseSwaggerUI(c => c.SwaggerEndpoint("/swagger/v1/swagger.json",
+            $"{builder.Environment.ApplicationName} v1"));
     }
 
+    app.UseRouting();
     app.UseHttpsRedirection();
 
     app.UseAuthorization();
 
-    app.MapControllers();
+    app.UseHangfireDashboard(builder.Configuration);
+
+    app.UseEndpoints(endpoints =>
+    {
+        endpoints.MapDefaultControllerRoute();
+    });
+
 
     app.Run();
 
@@ -45,6 +56,6 @@ catch (Exception ex)
 }
 finally
 {
-    Log.Information("Shut down Hangfire API complete");
+    Log.Information("Shut down Product API complete");
     Log.CloseAndFlush();
 }
