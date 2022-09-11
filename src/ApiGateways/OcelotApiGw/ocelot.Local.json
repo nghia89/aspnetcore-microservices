@@ -302,7 +302,7 @@
         {
           "Name": "Order API",
           "Version": "v1",
-          "Url": "http://order.api/swagger/v1/swagger.json"
+          "Url": "http://ordering.api/swagger/v1/swagger.json"
         }
       ]
     },
