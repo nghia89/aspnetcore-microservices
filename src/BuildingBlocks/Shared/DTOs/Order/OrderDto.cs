@@ -1,16 +1,9 @@
-﻿using AutoMapper;
-using Ordering.Application.Features.V1.Orders.Commands.UpdateOrder;
-using Ordering.Domain.Entities;
+﻿using System;
 using Shared.Enums.Order;
-using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
 
-namespace Ordering.Application.Common.Models
+namespace Shared.DTOs.Order
 {
-    public class OrderDto : IMapFrom<Order>, IMapFrom<UpdateOrderCommand>
+    public class OrderDto
     {
         public long Id { get; set; }
         public string DocumentNo { get; set; }
@@ -28,3 +21,4 @@ namespace Ordering.Application.Common.Models
         public EOrderStatus Status { get; set; }
     }
 }
+

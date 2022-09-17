@@ -4,14 +4,16 @@
     "windowsAuthentication": false,
     "anonymousAuthentication": true,
     "iisExpress": {
-      "applicationUrl": "http://localhost:51075/",
-      "sslPort": 44399
+      "applicationUrl": "http://localhost:48317",
+      "sslPort": 44325
     }
   },
   "profiles": {
-    "Product.API": {
+    "Saga.Orchestrator": {
       "commandName": "Project",
-      "applicationUrl": "http://localhost:5002",
+      "launchBrowser": true,
+      "launchUrl": "swagger",
+      "applicationUrl": "http://localhost:5009",
       "environmentVariables": {
         "ASPNETCORE_ENVIRONMENT": "Development"
       }
@@ -23,12 +25,6 @@
       "environmentVariables": {
         "ASPNETCORE_ENVIRONMENT": "Development"
       }
-    },
-    "Docker": {
-      "commandName": "Docker",
-      "launchBrowser": true,
-      "launchUrl": "{Scheme}://{ServiceHost}:{ServicePort}/swagger",
-      "environmentVariables": {}
     }
   }
 }

@@ -36,6 +36,8 @@
 		<Folder Include="Features\V1\Orders\Commands\CreateOrder\" />
 		<Folder Include="Features\V1\Orders\Commands\DeleteOrder\" />
 		<Folder Include="Features\V1\Orders\Commands\UpdateOrder\" />
+		<Folder Include="Features\V1\Orders\Queries\GetOrderById\" />
+		<Folder Include="Features\V1\Orders\Commands\DeleteOrderByDocumentNo\" />
 	</ItemGroup>
 	<ItemGroup>
 		<None Remove="Features\" />
@@ -49,5 +51,7 @@
 		<None Remove="Features\V1\Orders\Commands\UpdateOrder\" />
 		<None Remove="FluentValidation" />
 		<None Remove="FluentValidation.DependencyInjectionExtensions" />
+		<None Remove="Features\V1\Orders\Queries\GetOrderById\" />
+		<None Remove="Features\V1\Orders\Commands\DeleteOrderByDocumentNo\" />
 	</ItemGroup>
 </Project>

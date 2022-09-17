@@ -1,11 +1,7 @@
 ﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
-
-namespace Ordering.Domain.Enums
+namespace Shared.Enums.Order
 {
+
     public enum EOrderStatus
     {
         New = 1, //start with 1, 0 is used for filter All = 0
@@ -15,3 +11,4 @@ namespace Ordering.Domain.Enums
         Fulfilled, //order is fulfilled
     }
 }
+

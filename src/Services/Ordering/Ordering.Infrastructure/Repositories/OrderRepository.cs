@@ -35,5 +35,11 @@ namespace Ordering.Infrastructure.Repositories
         }
 
         public void DeleteOrder(Order order) => Delete(order);
+
+
+        public Task<Order> GetOrderByDocumentNo(string documentNo)
+            => FindByCondition(x => x.DocumentNo.ToString().Equals(documentNo)).FirstOrDefaultAsync();
+
+
     }
 }

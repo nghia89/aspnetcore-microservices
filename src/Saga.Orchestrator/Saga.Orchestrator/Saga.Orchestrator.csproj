@@ -1,0 +1,48 @@
+<?xml version="1.0" encoding="utf-8"?>
+<Project Sdk="Microsoft.NET.Sdk.Web">
+	<PropertyGroup>
+		<TargetFramework>net6.0</TargetFramework>
+		<Nullable>enable</Nullable>
+		<ImplicitUsings>enable</ImplicitUsings>
+	</PropertyGroup>
+	<ItemGroup>
+		<PackageReference Include="AutoMapper.Extensions.Microsoft.DependencyInjection" Version="11.0.0" />
+		<PackageReference Include="stateless" Version="5.11.0" />
+		<PackageReference Include="Swashbuckle.AspNetCore" Version="6.2.3" />
+		<PackageReference Include="Swashbuckle.AspNetCore.Swagger" Version="6.4.0" />
+	</ItemGroup>
+	<ItemGroup>
+		<ProjectReference Include="..\..\BuildingBlocks\Common.Logging\Common.Logging.csproj">
+			<GlobalPropertiesToRemove>
+			</GlobalPropertiesToRemove>
+		</ProjectReference>
+		<ProjectReference Include="..\..\BuildingBlocks\Shared\Shared.csproj">
+			<GlobalPropertiesToRemove>
+			</GlobalPropertiesToRemove>
+		</ProjectReference>
+		<ProjectReference Include="..\..\Services\Ordering\Ordering.Infrastructure\Ordering.Infrastructure.csproj">
+			<GlobalPropertiesToRemove>
+			</GlobalPropertiesToRemove>
+		</ProjectReference>
+		<ProjectReference Include="..\..\BuildingBlocks\Contracts\Contracts.csproj">
+		  <GlobalPropertiesToRemove></GlobalPropertiesToRemove>
+		</ProjectReference>
+	</ItemGroup>
+	<ItemGroup>
+		<None Remove="HttpRepository\" />
+		<None Remove="HttpRepository\Interfaces\" />
+		<None Remove="Controllers\" />
+		<None Remove="Services\" />
+		<None Remove="Services\Interfaces\" />
+		<None Remove="Swashbuckle.AspNetCore.Swagger" />
+		<None Remove="OrderManager\" />
+	</ItemGroup>
+	<ItemGroup>
+		<Folder Include="HttpRepository\" />
+		<Folder Include="HttpRepository\Interfaces\" />
+		<Folder Include="Controllers\" />
+		<Folder Include="Services\" />
+		<Folder Include="Services\Interfaces\" />
+		<Folder Include="OrderManager\" />
+	</ItemGroup>
+</Project>

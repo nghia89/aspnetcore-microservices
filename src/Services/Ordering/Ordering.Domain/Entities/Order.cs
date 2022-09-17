@@ -1,8 +1,8 @@
 ﻿using Contracts.Common.Events;
 using Contracts.Common.Interfaces;
 using Contracts.Domains;
-using Ordering.Domain.Enums;
 using Ordering.Domain.OrderAggregate.Events;
+using Shared.Enums.Order;
 using System;
 using System.Collections.Generic;
 using System.ComponentModel.DataAnnotations;

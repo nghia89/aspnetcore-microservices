@@ -19,8 +19,12 @@
   <ItemGroup>
     <None Remove="Common\Events\" />
     <None Remove="MediatR" />
+    <None Remove="Sagas\" />
+    <None Remove="Sagas\OrderManager\" />
   </ItemGroup>
   <ItemGroup>
     <Folder Include="Common\Events\" />
+    <Folder Include="Sagas\" />
+    <Folder Include="Sagas\OrderManager\" />
   </ItemGroup>
 </Project>

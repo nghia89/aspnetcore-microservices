@@ -5,6 +5,7 @@ using MediatR;
 using Ordering.Application.Common;
 using Ordering.Application.Features.V1.Orders.Common;
 using Ordering.Domain.Entities;
+using Shared.DTOs.Order;
 using Shared.SeedWork;
 
 namespace Ordering.Application.Features.V1.Orders
@@ -18,6 +19,7 @@ namespace Ordering.Application.Features.V1.Orders
         {
             profile.CreateMap<CreateOrderCommand, Order>();
             profile.CreateMap<BasketCheckoutEvent, CreateOrderCommand>();
+            profile.CreateMap<CreateOrderDto, CreateOrderCommand>();
         }
     }
 }

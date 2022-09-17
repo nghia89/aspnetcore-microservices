@@ -13,5 +13,11 @@
 
   <ItemGroup>
     <None Remove="Configuarations\" />
+    <None Remove="DTOs\Order\" />
+    <None Remove="Enums\Order\" />
+  </ItemGroup>
+  <ItemGroup>
+    <Folder Include="DTOs\Order\" />
+    <Folder Include="Enums\Order\" />
   </ItemGroup>
 </Project>
