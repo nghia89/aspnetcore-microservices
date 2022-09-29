@@ -1,5 +1,7 @@
 using Hangfire.API.Extensions;
+using HealthChecks.UI.Client;
 using Infrastructure.ScheduledJobs;
+using Microsoft.AspNetCore.Diagnostics.HealthChecks;
 using Serilog;
 
 var builder = WebApplication.CreateBuilder(args);
@@ -7,10 +9,10 @@ var builder = WebApplication.CreateBuilder(args);
 Log.Information("Start Product API up");
 
 try
-{ 
+{
     // Add services to the container.
 
-builder.Services.AddControllers();
+    builder.Services.AddControllers();
     builder.Host.AddAppConfigurations();
     builder.Services.AddConfigurationSettings(builder.Configuration);
     // Learn more about configuring Swagger/OpenAPI at https://aka.ms/aspnetcore/swashbuckle
@@ -18,6 +20,7 @@ builder.Services.AddControllers();
     builder.Services.AddSwaggerGen();
     builder.Services.AddTeduHangfireService();
     builder.Services.ConfigureServices();
+    builder.Services.ConfigureHealthChecks();
     var app = builder.Build();
 
     // Configure the HTTP request pipeline.
@@ -37,9 +40,13 @@ builder.Services.AddControllers();
 
     app.UseEndpoints(endpoints =>
     {
+        endpoints.MapHealthChecks("/hc", new HealthCheckOptions()
+        {
+            Predicate = _ => true,
+            ResponseWriter = UIResponseWriter.WriteHealthCheckUIResponse
+        });
         endpoints.MapDefaultControllerRoute();
     });
-
 
     app.Run();
 

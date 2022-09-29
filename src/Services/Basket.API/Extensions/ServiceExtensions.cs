@@ -3,13 +3,16 @@ using Basket.API.Repositories;
 using Basket.API.Repositories.Interfaces;
 using Basket.API.Services;
 using Basket.API.Services.Interfaces;
+using Common.Logging;
 using Contracts.Common.Interfaces;
 using EventBus.Messages.IntegrationEvents.Interfaces;
 using Infrastructure.Common;
 using Infrastructure.Extensions;
+using Infrastructure.Policies;
 using Inventory.Grpc.Client;
 using MassTransit;
 using Microsoft.Extensions.DependencyInjection.Extensions;
+using Microsoft.Extensions.Diagnostics.HealthChecks;
 using Shared.Configurations;
 
 namespace Basket.API.Extensions
@@ -40,13 +43,18 @@ namespace Basket.API.Extensions
 
         public static void ConfigureHttpClientService(this IServiceCollection services)
         {
-            services.AddHttpClient<BackgroundJobHttpService>();
+            services.AddHttpClient<BackgroundJobHttpService>()
+                .AddHttpMessageHandler<LoggingDelegatingHandler>()
+                .UseImmediateHttpRetryPolicy()
+                .UseCircuitBreakerPolicy()
+                .ConfigureTimeoutPolicy();
         }
 
         public static IServiceCollection ConfigureServices(this IServiceCollection services) =>
             services.AddScoped<IBasketRepository, BasketRepository>()
-                .AddTransient<ISerializeService, SerializeService>()
-             .AddTransient<IEmailTemplateService, BasketEmailTemplateService>()
+                 .AddTransient<ISerializeService, SerializeService>()
+                 .AddTransient<IEmailTemplateService, BasketEmailTemplateService>()
+                 .AddTransient<LoggingDelegatingHandler>()
             ;
 
 
@@ -89,6 +97,15 @@ namespace Basket.API.Extensions
                 // Publish submit order message, instead of sending it to a specific queue directly.
                 config.AddRequestClient<IBasketCheckoutEvent>();
             });
+        }
+
+        public static void ConfigureHealthChecks(this IServiceCollection services)
+        {
+            var cacheSettings = services.GetOptions<CacheSettings>(nameof(CacheSettings));
+            services.AddHealthChecks()
+                .AddRedis(cacheSettings.ConnectionString,
+                    name: "Redis Health",
+                    failureStatus: HealthStatus.Degraded);
         }
     }
 }

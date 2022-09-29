@@ -1,8 +1,10 @@
 using Common.Logging;
 using Infrastructure.Middlewares;
+using Microsoft.AspNetCore.Diagnostics.HealthChecks;
 using Product.API.Extensions;
 using Product.API.Persistence;
 using Serilog;
+using HealthChecks.UI.Client;
 
 var builder = WebApplication.CreateBuilder(args);
 
@@ -24,12 +26,22 @@ try
     }
     app.UseInfrastructure();
     app.UseMiddleware<ErrorWrappingMiddleware>();
+    app.UseRouting();
+    app.UseEndpoints(endpoints =>
+    {
+        endpoints.MapHealthChecks("/hc", new HealthCheckOptions()
+        {
+            Predicate = _ => true,
+            ResponseWriter = UIResponseWriter.WriteHealthCheckUIResponse
+        });
+        endpoints.MapDefaultControllerRoute();
+    });
     app.MigrateDatabase<ProductContext>((context, _) =>
     {
         ProductContextSeed.SeedProductAsync(context, Log.Logger).Wait();
     })
         .Run();
- 
+
 }
 
 catch (Exception ex)

@@ -1,7 +1,9 @@
 using Basket.API;
 using Basket.API.Extensions;
 using Common.Logging;
+using HealthChecks.UI.Client;
 using Infrastructure.Middlewares;
+using Microsoft.AspNetCore.Diagnostics.HealthChecks;
 using Serilog;
 
 var builder = WebApplication.CreateBuilder(args);
@@ -29,6 +31,7 @@ try
     builder.Services.AddEndpointsApiExplorer();
     builder.Services.AddSwaggerGen();
     builder.Services.ConfigureHttpClientService();
+    builder.Services.ConfigureHealthChecks();
     var app = builder.Build();
 
     // Configure the HTTP request pipeline.
@@ -43,8 +46,16 @@ try
     app.UseMiddleware<ErrorWrappingMiddleware>();
     app.UseAuthorization();
 
-    app.MapDefaultControllerRoute();
-
+    app.UseRouting();
+    app.UseEndpoints(endpoints =>
+    {
+        endpoints.MapHealthChecks("/hc", new HealthCheckOptions()
+        {
+            Predicate = _ => true,
+            ResponseWriter = UIResponseWriter.WriteHealthCheckUIResponse
+        });
+        endpoints.MapDefaultControllerRoute();
+    });
     app.Run();
 
 }

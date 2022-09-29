@@ -1,0 +1,8 @@
+version: '3.4'
+
+services:
+  webhealthstatus:
+    image: ${DOCKER_REGISTRY-}webhealthstatus
+    build:
+      context: .
+      dockerfile: src/WebApps/WebHealthStatus/Dockerfile

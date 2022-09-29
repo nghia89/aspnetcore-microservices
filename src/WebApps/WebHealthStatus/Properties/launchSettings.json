@@ -10,8 +10,7 @@
   "profiles": {
     "WebHealthStatus": {
       "commandName": "Project",
-      "launchBrowser": true,
-      "applicationUrl": "http://localhost:3691",
+      "applicationUrl": "http://localhost:5010",
       "environmentVariables": {
         "ASPNETCORE_ENVIRONMENT": "Development"
       }

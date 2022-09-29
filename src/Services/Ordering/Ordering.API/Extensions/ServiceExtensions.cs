@@ -2,6 +2,7 @@
 using Infrastructure.Extensions;
 using MassTransit;
 using Microsoft.Extensions.DependencyInjection.Extensions;
+using Microsoft.Extensions.Diagnostics.HealthChecks;
 using Ordering.API.Appliction.IntegrationEvents.EventsHandler;
 using Shared.Configurations;
 
@@ -21,6 +22,9 @@ namespace Ordering.API.Extensions
                 .Get<EventBusSettings>();
             services.AddSingleton(eventBusSettings);
 
+            var databaseSettings = configuration.GetSection(nameof(DatabaseSettings))
+           .Get<DatabaseSettings>();
+            services.AddSingleton(databaseSettings);
             return services;
         }
 
@@ -46,6 +50,15 @@ namespace Ordering.API.Extensions
                     cfg.ConfigureEndpoints(ctx);
                 });
             });
+        }
+
+        public static void ConfigureHealthChecks(this IServiceCollection services)
+        {
+            var databaseSettings = services.GetOptions<DatabaseSettings>(nameof(DatabaseSettings));
+            services.AddHealthChecks()
+                .AddSqlServer(databaseSettings.ConnectionString,
+                    name: "SqlServer Health",
+                    failureStatus: HealthStatus.Degraded);
         }
     }
 }

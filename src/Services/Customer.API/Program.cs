@@ -1,13 +1,16 @@
 using Common.Logging;
 using Contracts.Common.Interfaces;
 using Customer.API.Controllers;
+using Customer.API.Extensions;
 using Customer.API.Persistence;
 using Customer.API.Repositories;
 using Customer.API.Repositories.Interfaces;
 using Customer.API.Services;
 using Customer.API.Services.Interfaces;
+using HealthChecks.UI.Client;
 using Infrastructure.Common;
 using Infrastructure.Middlewares;
+using Microsoft.AspNetCore.Diagnostics.HealthChecks;
 using Microsoft.EntityFrameworkCore;
 using Serilog;
 
@@ -34,6 +37,7 @@ try
     builder.Services.AddDbContext<CustomerContext>(option => option.UseNpgsql(connectionString));
     builder.Services.AddScoped<ICustomerRepository, CustomerRepository>()
         .AddScoped<ICustomerService, CustomerService>();
+    builder.Services.ConfigureHealthChecks();
     var app = builder.Build();
     app.MapCustomerController();
 
@@ -48,11 +52,18 @@ try
     }
     app.UseMiddleware<ErrorWrappingMiddleware>();
     app.UseHttpsRedirection();
-  
+
     app.UseAuthorization();
-
-    app.MapControllers();
-
+    app.UseRouting();
+    app.UseEndpoints(endpoints =>
+    {
+        endpoints.MapHealthChecks("/hc", new HealthCheckOptions()
+        {
+            Predicate = _ => true,
+            ResponseWriter = UIResponseWriter.WriteHealthCheckUIResponse
+        });
+        endpoints.MapDefaultControllerRoute();
+    });
     app.Run();
 
 }
