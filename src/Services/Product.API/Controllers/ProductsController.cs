@@ -1,4 +1,5 @@
 ﻿using AutoMapper;
+using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
 using Product.API.Entities;
 using Product.API.Repositories.Interfaces;
@@ -11,6 +12,7 @@ namespace Product.API.Controllers;
 
 [ApiController]
 [Route("api/[controller]")]
+[Authorize("Bearer")]
 public class ProductsController : ControllerBase
 {
     private readonly IProductRepository _repository;
