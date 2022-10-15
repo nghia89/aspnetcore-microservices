@@ -1,8 +1,10 @@
 ﻿using AutoMapper;
+using Infrastructure.Identity.Authorization;
 using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
 using Product.API.Entities;
 using Product.API.Repositories.Interfaces;
+using Shared.Common.Constants;
 using Shared.DTOs.Product;
 using System.ComponentModel.DataAnnotations;
 
@@ -26,6 +28,7 @@ public class ProductsController : ControllerBase
 
     #region CRUD
     [HttpGet]
+    [ClaimRequirement(FunctionCode.PRODUCT, CommandCode.VIEW)]
     public async Task<IActionResult> GetProducts()
     {
         var products = await _repository.GetProducts();
@@ -34,6 +37,7 @@ public class ProductsController : ControllerBase
     }
 
     [HttpGet("{id:long}")]
+    [ClaimRequirement(FunctionCode.PRODUCT, CommandCode.VIEW)]
     public async Task<IActionResult> GetProduct([Required] long id)
     {
         var product = await _repository.GetProduct(id);
@@ -45,6 +49,7 @@ public class ProductsController : ControllerBase
     }
 
     [HttpPost]
+    [ClaimRequirement(FunctionCode.PRODUCT, CommandCode.CREATE)]
     public async Task<IActionResult> CreateProduct([FromBody] CreateProductDto productDto)
     {
         var productEntity = await _repository.GetProductByNo(productDto.No);
@@ -58,6 +63,7 @@ public class ProductsController : ControllerBase
     }
 
     [HttpPut("{id:long}")]
+    [ClaimRequirement(FunctionCode.PRODUCT, CommandCode.UPDATE)]
     public async Task<IActionResult> UpdateProduct([Required] long id, [FromBody] UpdateProductDto productDto)
     {
         var product = await _repository.GetProduct(id);
