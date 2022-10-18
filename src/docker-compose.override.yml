@@ -63,8 +63,8 @@ services:
     restart: always
     environment:
       MONGO_INITDB_ROOT_USERNAME: 'admin'
-      MONGO_INITDB_ROOT_PASSWORD: 'admin' 
-  
+      MONGO_INITDB_ROOT_PASSWORD: 'admin'
+
   #infrastructure section
 
   rabbitmq:
@@ -128,6 +128,9 @@ services:
       - ASPNETCORE_ENVIRONMENT=Development
       - ASPNETCORE_URLS=http://+:80
       - "DatabaseSettings:ConnectionString=Server=productdb;Port=3306;Database=ProductDB;Uid=root;Pwd=Passw0rd!;"
+      - "ApiConfiguration:ApiBaseUrl=http://product.api"
+      - "ApiConfiguration:IdentityServerBaseUrl=http://localhost:6009"
+      - "ApiConfiguration:IssuerUri=http://ms.identity.api"
     depends_on:
       - productdb
     ports:
@@ -209,6 +212,9 @@ services:
       - ASPNETCORE_ENVIRONMENT=Local
       - ASPNETCORE_URLS=http://+:80
       - GlobalConfiguration:BaseUrl=http://apigw.ocelot
+      - ApiConfiguration:ApiBaseUrl=http://apigw.ocelot
+      - ApiConfiguration:IdentityServerBaseUrl=http://localhost:6009
+      - ApiConfiguration:IssuerUri=http://ms.identity.api
     depends_on:
       - customer.api
       - basket.api
