@@ -2,7 +2,8 @@
   "profiles": {
     "Inventory.Grpc": {
       "commandName": "Project",
-      "applicationUrl": "http://localhost:5007",
+      "launchBrowser": true,
+      "applicationUrl": "http://localhost:5575",
       "environmentVariables": {
         "ASPNETCORE_ENVIRONMENT": "Development"
       }
