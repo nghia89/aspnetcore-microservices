@@ -25,7 +25,7 @@ Log.Information("Start Customer API up");
 
 try
 {
-
+    builder.Host.AddAppConfigurations();
     // Add services to the container.
     builder.Host.UseSerilog(Serilogger.Configure);
     builder.Services.AddControllers();
@@ -33,10 +33,8 @@ try
     builder.Services.AddEndpointsApiExplorer();
     builder.Services.AddSwaggerGen();
 
-    var connectionString = builder.Configuration.GetConnectionString("DefaultConnectionString");
-    builder.Services.AddDbContext<CustomerContext>(option => option.UseNpgsql(connectionString));
-    builder.Services.AddScoped<ICustomerRepository, CustomerRepository>()
-        .AddScoped<ICustomerService, CustomerService>();
+    builder.Services.ConfigureCustomerContext();
+    builder.Services.AddInfrastructureServices();
     builder.Services.ConfigureHealthChecks();
     var app = builder.Build();
     app.MapCustomerController();

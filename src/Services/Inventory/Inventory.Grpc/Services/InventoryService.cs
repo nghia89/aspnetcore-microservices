@@ -11,7 +11,7 @@ namespace Inventory.Grpc.Services
         private readonly ILogger _logger;
         public InventoryService(IInventoryRepository inventoryRepository, ILogger logger)
         {
-            _inventoryRepository = inventoryRepository; 
+            _inventoryRepository = inventoryRepository;
             _logger = logger;
         }
 

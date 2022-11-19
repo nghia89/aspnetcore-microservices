@@ -5,7 +5,7 @@
             "name": "Ocelot.ApiGW",
             "type": "coreclr",
             "request": "launch",
-            "preLaunchTask": "build",
+            "preLaunchTask": "Build.Ocelot.ApiGW",
             // If you have changed target frameworks, make sure to update the program path.
             "program": "${workspaceFolder}/src/ApiGateways/OcelotApiGw/bin/Debug/net6.0/OcelotApiGw.dll",
             "args": [],
@@ -30,7 +30,7 @@
             "name": "Basket.API",
             "type": "coreclr",
             "request": "launch",
-            "preLaunchTask": "build",
+            "preLaunchTask": "Build.Basket.API",
             // If you have changed target frameworks, make sure to update the program path.
             "program": "${workspaceFolder}/src/Services/Basket.API/bin/Debug/net6.0/Basket.API.dll",
             "args": [],
@@ -52,7 +52,7 @@
             "name": "Product.API",
             "type": "coreclr",
             "request": "launch",
-            "preLaunchTask": "build",
+            "preLaunchTask": "Build.Product.API",
             // If you have changed target frameworks, make sure to update the program path.
             "program": "${workspaceFolder}/src/Services/Product.API/bin/Debug/net6.0/Product.API.dll",
             "args": [],
@@ -70,5 +70,126 @@
                 "/Views": "${workspaceFolder}/Views"
             }
         },
+        {
+            "name": "Customer.API",
+            "type": "coreclr",
+            "request": "launch",
+            "preLaunchTask": "Build.Customer.API",
+            // If you have changed target frameworks, make sure to update the program path.
+            "program": "${workspaceFolder}/src/Services/Customer.API/bin/Debug/net6.0/Customer.API.dll",
+            "args": [],
+            "cwd": "${workspaceFolder}/src/Services/Customer.API",
+            "stopAtEntry": false,
+            // Enable launching a web browser when ASP.NET Core starts. For more information: https://aka.ms/VSCode-CS-LaunchJson-WebBrowser
+            "serverReadyAction": {
+                "action": "openExternally",
+                "pattern": "\\bNow listening on:\\s+(https?://\\S+)"
+            },
+            "env": {
+                "ASPNETCORE_ENVIRONMENT": "Development"
+            },
+            "sourceFileMap": {
+                "/Views": "${workspaceFolder}/Views"
+            }
+        },
+        {
+            "name": "Order.API",
+            "type": "coreclr",
+            "request": "launch",
+            "preLaunchTask": "Build.Order.API",
+            // If you have changed target frameworks, make sure to update the program path.
+            "program": "${workspaceFolder}/src/Services/Ordering/Ordering.API/bin/Debug/net6.0/Ordering.API.dll",
+            "args": [],
+            "cwd": "${workspaceFolder}/src/Services/Ordering/Ordering.API",
+            "stopAtEntry": false,
+            // Enable launching a web browser when ASP.NET Core starts. For more information: https://aka.ms/VSCode-CS-LaunchJson-WebBrowser
+            "serverReadyAction": {
+                "action": "openExternally",
+                "pattern": "\\bNow listening on:\\s+(https?://\\S+)"
+            },
+            "env": {
+                "ASPNETCORE_ENVIRONMENT": "Development"
+            },
+            "sourceFileMap": {
+                "/Views": "${workspaceFolder}/Views"
+            }
+        },
+        {
+            "name": "Inventory.API",
+            "type": "coreclr",
+            "request": "launch",
+            "preLaunchTask": "Build.Inventory.API",
+            // If you have changed target frameworks, make sure to update the program path.
+            "program": "${workspaceFolder}/src/Services/Inventory/Inventory.Product.API/bin/Debug/net6.0/Inventory.Product.API.dll",
+            "args": [],
+            "cwd": "${workspaceFolder}/src/Services/Inventory/Inventory.Product.API",
+            "stopAtEntry": false,
+            // Enable launching a web browser when ASP.NET Core starts. For more information: https://aka.ms/VSCode-CS-LaunchJson-WebBrowser
+            "serverReadyAction": {
+                "action": "openExternally",
+                "pattern": "\\bNow listening on:\\s+(https?://\\S+)"
+            },
+            "env": {
+                "ASPNETCORE_ENVIRONMENT": "Development"
+            },
+            "sourceFileMap": {
+                "/Views": "${workspaceFolder}/Views"
+            }
+        },
+        {
+            "name": "Inventory.Grpc",
+            "type": "coreclr",
+            "request": "launch",
+            "preLaunchTask": "Build.Inventory.Grpc",
+            // If you have changed target frameworks, make sure to update the program path.
+            "program": "${workspaceFolder}/src/Services/Inventory/Inventory.Grpc/bin/Debug/net6.0/Inventory.Grpc.dll",
+            "args": [],
+            "cwd": "${workspaceFolder}/src/Services/Inventory/Inventory.Grpc",
+            "stopAtEntry": false,
+            "console": "integratedTerminal",
+            "env": {
+                "ASPNETCORE_ENVIRONMENT": "Development"
+            },
+            "sourceFileMap": {
+                "/Views": "${workspaceFolder}/Views"
+            }
+        },
+        {
+            "name": "Saga.Orchestrator",
+            "type": "coreclr",
+            "request": "launch",
+            "preLaunchTask": "Build.Saga.Orchestrator",
+            // If you have changed target frameworks, make sure to update the program path.
+            "program": "${workspaceFolder}/src/Saga.Orchestrator/Saga.Orchestrator/bin/Debug/net6.0/Saga.Orchestrator.dll",
+            "args": [],
+            "cwd": "${workspaceFolder}/src/Saga.Orchestrator/Saga.Orchestrator",
+            "stopAtEntry": false,
+            // Enable launching a web browser when ASP.NET Core starts. For more information: https://aka.ms/VSCode-CS-LaunchJson-WebBrowser
+            "serverReadyAction": {
+                "action": "openExternally",
+                "pattern": "\\bNow listening on:\\s+(https?://\\S+)"
+            },
+            "env": {
+                "ASPNETCORE_ENVIRONMENT": "Development"
+            },
+            "sourceFileMap": {
+                "/Views": "${workspaceFolder}/Views"
+            }
+        }
+    ],
+    "compounds": [
+        {
+            "name": "Multiline Api",
+            "configurations": [
+                "Inventory.Grpc",
+                "Order.API",
+                "Basket.API",
+                "Customer.API",
+                "Inventory.API",
+                "Ocelot.ApiGW",
+                "Product.API",
+                "Saga.Orchestrator"
+            ]
+        }
     ]
 }

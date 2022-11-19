@@ -1,6 +1,7 @@
 ﻿using Infrastructure.Common;
 using Inventory.Grpc.Entities;
 using Inventory.Grpc.Repositories.Interfaces;
+using Microsoft.EntityFrameworkCore;
 using MongoDB.Driver;
 using Shared.Configurations;
 

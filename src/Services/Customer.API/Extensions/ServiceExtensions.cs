@@ -20,10 +20,6 @@ namespace Customer.API.Extensions
                 .Get<DatabaseSettings>();
             services.AddSingleton(databaseSettings);
 
-            var hangfireSettings = configuration.GetSection(nameof(HangFireSettings))
-                .Get<HangFireSettings>();
-            services.AddSingleton(hangfireSettings);
-
             return services;
         }
 

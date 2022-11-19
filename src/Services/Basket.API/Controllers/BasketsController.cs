@@ -7,6 +7,7 @@ using EventBus.Messages.IntegrationEvents.Events;
 using MassTransit;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.Extensions.Caching.Distributed;
+using Newtonsoft.Json;
 using Shared.DTOs.Basket;
 using System.ComponentModel.DataAnnotations;
 using System.Net;
@@ -55,7 +56,7 @@ namespace Basket.API.Controllers
             var options = new DistributedCacheEntryOptions()
                 .SetAbsoluteExpiration(DateTime.UtcNow.AddHours(10));
             //     .SetSlidingExpiration(TimeSpan.FromMinutes(10));
-            var cart=_mapper.Map<Cart>(model);
+            var cart = _mapper.Map<Cart>(model);
             var updatedCart = await _basketRepository.UpdateBasket(cart, options);
             var result = _mapper.Map<CartDto>(updatedCart);
             return Ok(result);
@@ -69,21 +70,21 @@ namespace Basket.API.Controllers
             return Ok(result);
         }
 
-        [Route("[action]")]
+        [Route("[action]/{username}")]
         [HttpPost]
         [ProducesResponseType((int)HttpStatusCode.Accepted)]
         [ProducesResponseType((int)HttpStatusCode.BadRequest)]
-        public async Task<IActionResult> Checkout([FromBody] BasketCheckout basketCheckout)
+        public async Task<IActionResult> Checkout([Required] string username, [FromBody] BasketCheckout basketCheckout)
         {
-            var basket = await _basketRepository.GetBasketByUserName(basketCheckout.UserName);
-            if (basket == null) return NotFound();
+            var basket = await _basketRepository.GetBasketByUserName(username);
+            if (basket == null || !basket.Items.Any()) return NotFound();
 
             //publish checkout event to EventBus Message
             var eventMessage = _mapper.Map<BasketCheckoutEvent>(basketCheckout);
             eventMessage.TotalPrice = basket.TotalPrice;
             await _publishEndpoint.Publish(eventMessage);
             //remove the basket
-            await _basketRepository.DeleteBasketFromUserName(basket.Username);
+            //await _basketRepository.DeleteBasketFromUserName(basket.Username);
 
             return Accepted();
         }

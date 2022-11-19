@@ -1,5 +1,6 @@
 ﻿using System;
 using AutoMapper;
+using EventBus.Messages.IntegrationEvents.Events;
 using Shared.DTOs.Basket;
 using Shared.DTOs.InVentory;
 using Shared.DTOs.Order;
@@ -12,6 +13,7 @@ namespace Saga.Orchestrator
         {
             CreateMap<BasketCheckoutDto, CreateOrderDto>();
             CreateMap<CartItemDto, SaleItemDto>();
+            CreateMap<BasketCheckoutEvent, BasketCheckoutDto>();
         }
     }
 }

@@ -10,6 +10,7 @@
 		<PackageReference Include="stateless" Version="5.11.0" />
 		<PackageReference Include="Swashbuckle.AspNetCore" Version="6.2.3" />
 		<PackageReference Include="Swashbuckle.AspNetCore.Swagger" Version="6.4.0" />
+		<PackageReference Include="MassTransit.RabbitMQ" Version="8.0.8" />
 	</ItemGroup>
 	<ItemGroup>
 		<ProjectReference Include="..\..\BuildingBlocks\Common.Logging\Common.Logging.csproj">
@@ -36,6 +37,9 @@
 		<None Remove="Services\Interfaces\" />
 		<None Remove="Swashbuckle.AspNetCore.Swagger" />
 		<None Remove="OrderManager\" />
+		<None Remove="MassTransit.RabbitMQ" />
+		<None Remove="IntegrationEvents\" />
+		<None Remove="IntegrationEvents\EventsHanler\" />
 	</ItemGroup>
 	<ItemGroup>
 		<Folder Include="HttpRepository\" />
@@ -44,5 +48,7 @@
 		<Folder Include="Services\" />
 		<Folder Include="Services\Interfaces\" />
 		<Folder Include="OrderManager\" />
+		<Folder Include="IntegrationEvents\" />
+		<Folder Include="IntegrationEvents\EventsHanler\" />
 	</ItemGroup>
 </Project>
