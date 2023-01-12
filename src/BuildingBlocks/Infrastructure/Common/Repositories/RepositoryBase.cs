@@ -55,7 +55,12 @@ namespace Infrastructure.Common
             return;
         }
 
-        public Task UpdateListAsync(IEnumerable<T> entities) => _dbContext.Set<T>().AddRangeAsync(entities);
+        public async Task UpdateListAsync(IEnumerable<T> entities)
+        {
+            foreach (var entity in entities)
+                Update(entity);
+            await SaveChangesAsync();
+        }
 
         public async Task DeleteAsync(T entity)
         {
